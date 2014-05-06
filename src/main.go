@@ -43,6 +43,76 @@ func (self *Juego) Fill() {
 	}
 }
 
+/* Comprobar todas las casillas del tablero */
+func (self *Juego) Check() {
+	var flag bool
+	for i, v := range self.Tablero {
+		for j, celula := range v {
+
+			//Si la célula está muerta
+			if celula == MUERTA {
+				//Celula.Check(false,i,j)
+				flag = self.CheckCelula(false, i, j)
+			} else {
+				//Si la célula está viva
+				//Puede sobrevivir o morir
+				flag = self.CheckCelula(true, i, j)
+			}
+			if flag {
+				self.Tablero[i][j] = VIVA
+			} else {
+				self.Tablero[i][j] = MUERTA
+			}
+			//fmt.Printf("%d,%d -> %d\n", i, j, celula)
+		}
+	}
+}
+
+/* Comprobar las células hermanas de una célula */
+func (self Juego) CheckCelula(flag bool, i int, j int) bool {
+
+	//Para controlar los 'runtime error: index out of range'
+	defer func() {
+		if r := recover(); r != nil {
+		}
+	}()
+
+	c := 0 //count
+
+	if self.Tablero[i-1][j-1] == VIVA {
+		c++
+	}
+	if self.Tablero[i-1][j] == VIVA {
+		c++
+	}
+	if self.Tablero[i-1][j+1] == VIVA {
+		c++
+	}
+
+	if self.Tablero[i][j-1] == VIVA {
+		c++
+	}
+	if self.Tablero[i][j+1] == VIVA {
+		c++
+	}
+
+	if self.Tablero[i+1][j-1] == VIVA {
+		c++
+	}
+	if self.Tablero[i+1][j] == VIVA {
+		c++
+	}
+	if self.Tablero[i+1][j+1] == VIVA {
+		c++
+	}
+
+	//Si está muerta y tiene 3 o más vivas
+	// o si está viva y tiene 2 o 3 vivas sigue viva
+	if (!flag && c >= 3) || (flag && c == 2 || c == 3) {
+		return true
+	}
+	return false
+}
 
 func main() {
 	j := new(Juego)
@@ -50,7 +120,7 @@ func main() {
 	j.fillTest()
 	for {
 		fmt.Println(j)
-		
+		j.Check()
 		time.Sleep(TIEMPO_ACTUALIZACION)
 	}
 }
