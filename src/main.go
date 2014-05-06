@@ -20,6 +20,17 @@ type Juego struct {
 	Tablero
 }
 
+func main() {
+	j := new(Juego)
+	j.Fill()
+	j.fillTest()
+	for {
+		fmt.Println(j)
+		j.Check()
+		time.Sleep(TIEMPO_ACTUALIZACION)
+	}
+}
+
 func (j Juego) String() string {
 	str := "\n"
 	for _, v := range j.Tablero {
@@ -28,7 +39,7 @@ func (j Juego) String() string {
 	return str
 }
 
-/* Rellenar todo el tablero */
+// Rellenar todo el tablero
 func (self *Juego) Fill() {
 	//Inicializamos el tablero
 	self.Tablero = make([][]Celula, TAMANO_TABLERO)
@@ -43,7 +54,7 @@ func (self *Juego) Fill() {
 	}
 }
 
-/* Comprobar todas las casillas del tablero */
+// Comprobar todas las casillas del tablero
 func (self *Juego) Check() {
 	var flag bool
 	for i, v := range self.Tablero {
@@ -68,7 +79,7 @@ func (self *Juego) Check() {
 	}
 }
 
-/* Comprobar las células hermanas de una célula */
+// Comprobar las células hermanas de una célula
 func (self Juego) CheckCelula(flag bool, i int, j int) bool {
 
 	//Para controlar los 'runtime error: index out of range'
@@ -114,18 +125,7 @@ func (self Juego) CheckCelula(flag bool, i int, j int) bool {
 	return false
 }
 
-func main() {
-	j := new(Juego)
-	j.Fill()
-	j.fillTest()
-	for {
-		fmt.Println(j)
-		j.Check()
-		time.Sleep(TIEMPO_ACTUALIZACION)
-	}
-}
-
-/* Rellenar todo el tablero */
+// Rellenar tablero con algunas casillas vivas
 func (j *Juego) fillTest() {
 	j.Tablero[0][0] = VIVA
 	j.Tablero[0][1] = VIVA
