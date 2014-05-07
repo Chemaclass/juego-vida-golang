@@ -60,11 +60,11 @@ func (self *Juego) Check() {
 			//Si la célula está muerta
 			if celula == MUERTA {
 				//Celula.Check(false,i,j)
-				flag = self.CheckCelula(false, i, j)
+				flag = self.checkCelula(false, i, j)
 			} else {
 				//Si la célula está viva
 				//Puede sobrevivir o morir
-				flag = self.CheckCelula(true, i, j)
+				flag = self.checkCelula(true, i, j)
 			}
 			if flag {
 				self.Tablero[i][j] = VIVA
@@ -79,7 +79,7 @@ func (self *Juego) Check() {
 }
 
 // Comprobar las células hermanas de una célula
-func (self Juego) CheckCelula(flag bool, i int, j int) bool {
+func (self Juego) checkCelula(flag bool, i int, j int) bool {
 
 	//Para controlar los 'runtime error: index out of range'
 	defer func() {
