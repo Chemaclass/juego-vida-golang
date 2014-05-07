@@ -140,3 +140,12 @@ func (self *Juego) FillInitTest() {
 func (self *Juego) Sleep() {
 	time.Sleep(TIEMPO_ACTUALIZACION)
 }
+
+//Ejecutar el Juego
+func (self *Juego) Run() {
+	for {
+		self.Print() // Pintar
+		self.Check() // Actualizar
+		self.Sleep() // Dormir
+	}
+}
