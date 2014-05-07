@@ -18,6 +18,7 @@ type Tablero [][]Celula
 
 type Juego struct {
 	Tablero
+	NumVivas int
 }
 
 func (j Juego) String() string {
@@ -25,7 +26,12 @@ func (j Juego) String() string {
 	for _, v := range j.Tablero {
 		str += fmt.Sprintf("%v\n", v)
 	}
+	str += fmt.Sprintf("Número de células vivas: %d\n", j.NumVivas)
 	return str
+}
+
+func (j Juego) Print() {
+	fmt.Println(j)
 }
 
 // Rellenar todo el tablero
@@ -41,10 +47,12 @@ func (self *Juego) Fill() {
 			self.Tablero[i][j] = MUERTA
 		}
 	}
+	self.NumVivas = 0
 }
 
 // Comprobar todas las casillas del tablero
 func (self *Juego) Check() {
+	numVivas := 0
 	var flag bool
 	for i, v := range self.Tablero {
 		for j, celula := range v {
@@ -60,12 +68,14 @@ func (self *Juego) Check() {
 			}
 			if flag {
 				self.Tablero[i][j] = VIVA
+				numVivas++
 			} else {
 				self.Tablero[i][j] = MUERTA
 			}
 			//fmt.Printf("%d,%d -> %d\n", i, j, celula)
 		}
 	}
+	self.NumVivas = numVivas
 }
 
 // Comprobar las células hermanas de una célula
@@ -108,7 +118,7 @@ func (self Juego) CheckCelula(flag bool, i int, j int) bool {
 
 	//Si está muerta y tiene 3 o más vivas
 	// o si está viva y tiene 2 o 3 vivas sigue viva
-	if (!flag && c >= 3) || (flag && c == 2 || c == 3) {
+	if (!flag && c >= 3) || (flag && (c == 2 || c == 3)) {
 		return true
 	}
 	return false
@@ -116,7 +126,6 @@ func (self Juego) CheckCelula(flag bool, i int, j int) bool {
 
 // Rellenar tablero con algunas casillas vivas
 func (self *Juego) FillInitTest() {
-	self.Tablero[0][1] = VIVA
 	self.Tablero[1][0] = VIVA
 	self.Tablero[1][2] = VIVA
 	self.Tablero[2][1] = VIVA
@@ -124,4 +133,5 @@ func (self *Juego) FillInitTest() {
 	self.Tablero[2][2] = VIVA
 	self.Tablero[3][4] = VIVA
 	self.Tablero[1][4] = VIVA
+	self.NumVivas = 7
 }

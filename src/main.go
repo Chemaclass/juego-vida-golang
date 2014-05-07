@@ -1,9 +1,8 @@
 package main
 
 import (
-	"fmt"
-	"time"
 	"juego"
+	"time"
 )
 
 func main() {
@@ -11,7 +10,7 @@ func main() {
 	j.Fill()
 	j.FillInitTest()
 	for {
-		fmt.Println(j)
+		j.Print()
 		j.Check()
 		time.Sleep(juego.TIEMPO_ACTUALIZACION)
 	}
