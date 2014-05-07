@@ -135,3 +135,8 @@ func (self *Juego) FillInitTest() {
 	self.Tablero[1][4] = VIVA
 	self.NumVivas = 7
 }
+
+// Parar el Juego para que podamos ver los cambios
+func (self *Juego) Sleep() {
+	time.Sleep(TIEMPO_ACTUALIZACION)
+}

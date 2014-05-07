@@ -2,7 +2,6 @@ package main
 
 import (
 	"juego"
-	"time"
 )
 
 func main() {
@@ -10,8 +9,8 @@ func main() {
 	j.Fill()
 	j.FillInitTest()
 	for {
-		j.Print()
-		j.Check()
-		time.Sleep(juego.TIEMPO_ACTUALIZACION)
+		j.Print() // Pintar
+		j.Check() // Actualizar
+		j.Sleep() // Dormir
 	}
 }
